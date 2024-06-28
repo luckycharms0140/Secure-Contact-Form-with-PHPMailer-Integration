@@ -2,12 +2,30 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Load Composer's autoloader or PHPMailer's autoload
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Honeypot field
+  if (!empty($_POST['website'])) {
+    // Bot detected
+    echo '<script>alert("Bot detected"); window.history.back();</script>';
+    exit;
+  }
+
+  // Verify reCAPTCHA
+  $recaptchaSecret = 'your_secret_key'; // Replace with your secret key
+  $recaptchaResponse = $_POST['g-recaptcha-response'];
+
+  $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptchaSecret&response=$recaptchaResponse");
+  $responseKeys = json_decode($response, true);
+
+  if (intval($responseKeys["success"]) !== 1) {
+    echo '<script>alert("Please complete the CAPTCHA"); window.history.back();</script>';
+    exit;
+  }
+
   $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
   $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
   $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8');

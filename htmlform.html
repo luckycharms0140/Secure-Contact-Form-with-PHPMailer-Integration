@@ -1,23 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+  <title>Contact Form</title>
+  <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Google reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <style>
+      .honeypot { display: none; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Contact Us</h2>
-        <form action="send_email.php" method="post"> <!-- Ensure this points to your PHP file -->
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-            <input type="submit" value="Submit">
-        </form>
+    <div class="main-content">
+        <div class="description">
+            <h2>Contact Us</h2>
+            <p>If you have any questions, concerns, or feedback, please feel free to reach out using the form below. We aim to respond within 24 hours.</p>
+            <form action="send_email.php" method="post">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+                <!-- Honeypot field -->
+                <div class="honeypot">
+                    <label for="website">Leave this field empty:</label>
+                    <input type="text" id="website" name="website">
+                </div>
+
+                <!-- Google reCAPTCHA -->
+                <div class="g-recaptcha" data-sitekey="your_site_key"></div> <!-- Replace with your site key -->
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div>
 </body>
 </html>

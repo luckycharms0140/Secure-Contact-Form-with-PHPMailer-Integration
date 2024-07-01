@@ -9,35 +9,36 @@
 
   <style>
       .honeypot { display: none; }
+      .submit-btn { display: none; } /* Initially hide the submit button */
   </style>
+
+  <script>
+      function recaptchaCallback() {
+          document.getElementById('submit-btn').style.display = 'block';
+      }
+  </script>
 </head>
 <body>
-    <div class="main-content">
-        <div class="description">
-            <h2>Contact Us</h2>
-            <p>If you have any questions, concerns, or feedback, please feel free to reach out using the form below. We aim to respond within 24 hours.</p>
-            <form action="send_email.php" method="post">
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name" required><br><br>
+    <form action="send_email.php" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
 
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
 
-                <label for="message">Message:</label><br>
-                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
 
-                <!-- Honeypot field -->
-                <div class="honeypot">
-                    <label for="website">Leave this field empty:</label>
-                    <input type="text" id="website" name="website">
-                </div>
-
-                <!-- Google reCAPTCHA -->
-                <div class="g-recaptcha" data-sitekey="your_site_key"></div> <!-- Replace with your site key -->
-
-                <input type="submit" value="Submit">
-            </form>
+        <!-- Honeypot field -->
+        <div class="honeypot">
+            <label for="website">Leave this field empty:</label>
+            <input type="text" id="website" name="website">
         </div>
-    </div>
+
+        <!-- Google reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="your_site_key" data-callback="recaptchaCallback"></div> <!-- Replace with your site key -->
+
+        <input type="submit" id="submit-btn" class="submit-btn" value="Submit">
+    </form>
 </body>
 </html>

@@ -35,6 +35,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
   }
 
+  // Enhanced spam keyword filter
+  $spamKeywords = [
+    'spam', 'viagra', 'free', 'offer', 'winner', 'prize', 'urgent', 'buy now', 'limited time', 'click here',
+    'subscribe', 'act now', 'apply now', 'bonus', 'claim', 'credit', 'earn', 'easy', 'extra cash', 'fast cash',
+    'guarantee', 'income', 'investment', 'loan', 'lose weight', 'money back', 'no cost', 'online biz opportunity',
+    'promise you', 'risk-free', 'sale', 'save big', 'special promotion', 'unsecured credit', 'weight loss',
+    'work from home', 'xxx', 'adult', 'casino', 'lottery', 'gamble', 'no fees', 'clearance', 'limited offer',
+    'discount', 'cash', 'luxury', 'urgent response', 'meet singles', 'sex', 'sexually explicit', 'earn money', 'quick cash'
+  ];
+
+  foreach ($spamKeywords as $keyword) {
+    if (stripos($message, $keyword) !== false) {
+      echo '<script>alert("Spam detected. Please revise your message."); window.history.back();</script>';
+      exit;
+    }
+  }
+
+  // Implement rate limiting (e.g., by IP address)
+  session_start();
+  if (!isset($_SESSION['last_submit_time'])) {
+    $_SESSION['last_submit_time'] = time();
+  } else {
+    $timeSinceLastSubmit = time() - $_SESSION['last_submit_time'];
+    if ($timeSinceLastSubmit < 60) { // Limit to one submission per minute
+      echo '<script>alert("You are submitting too fast. Please wait a moment."); window.history.back();</script>';
+      exit;
+    } else {
+      $_SESSION['last_submit_time'] = time();
+    }
+  }
+
   $mail = new PHPMailer(true);
 
   try {

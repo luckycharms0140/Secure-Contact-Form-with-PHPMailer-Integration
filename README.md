@@ -83,6 +83,25 @@ Issue: Unvalidated user input can lead to data integrity issues and security vul
 
 Solution: Validating and sanitizing user inputs to ensure they meet the expected format and content.
 
+Issue: Spam can make its way through the contact form.
+
+Solution: Hidden Submit Button Until reCAPTCHA Completion:
+
+Protection: Ensures that the form cannot be submitted unless the reCAPTCHA challenge is successfully completed.
+
+Implementation: The submit button is initially hidden and only displayed once the reCAPTCHA is successfully completed. This is achieved through a callback function defined in the JavaScript and triggered by reCAPTCHA.
+
+Enhanced Spam Keyword Filter:
+
+Protection: Blocks submissions containing common spam-related keywords and phrases.
+
+Implementation: The PHP script includes a more comprehensive list of spam keywords to identify and block spam messages more effectively.
+
+Rate Limiting:
+
+Protection: Prevents rapid, repeated submissions from the same IP address.
+
+Implementation: The PHP script implements a rate-limiting mechanism to restrict the same IP address from submitting the form more than once within a specified period (e.g., one minute).
 
 Setup Instructions!!!!!
 
